@@ -19,8 +19,8 @@
   </div>
 </div> 
    
-<div *ngIf="myitemsdisplayNew | async as useroneNew">
-<div *ngFor="let arrayval of useroneNew.TestArray ">
+<div *ngIf="myitemsdisplayArray | async as useroneNew">
+<div *ngFor="let arrayval of useroneNew.ArrayList ">
   <pre>{{ arrayval }}</pre>
 </div>
 </div>

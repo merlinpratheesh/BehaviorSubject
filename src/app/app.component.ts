@@ -18,7 +18,7 @@ export class AppComponent implements OnDestroy {
   subAuth: Subscription;
   myarraydisplay: [] = [];
   mysubDocRead: Subscription | undefined;
-  myitemsdisplay: Observable<any> | undefined;
+  myitemsdisplay: Observable<TestDocument> | undefined;
   myitemsdisplayArray: Observable<TestArrayNew> | undefined;
 
   constructor(public afAuth: AngularFireAuth, public tutorialService: UserdataService) {
