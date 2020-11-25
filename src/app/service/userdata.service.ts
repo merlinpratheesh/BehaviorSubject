@@ -8,15 +8,21 @@ export interface TestDocument{
   TestField: string; 
   TestFieldNext: string; 
 }
-export interface TestArrayNew{
+export interface TestArray{
+ 
  ArrayList: string[]; 
 }
+export interface TestMapString{
+  Name: string;
+  Place:string;
+ }
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserdataService {
+
   constructor(public auth: AngularFireAuth, private db: AngularFirestore){}
   login() {
     return this.auth.signInWithPopup( new (firebase.auth as any).GoogleAuthProvider());
@@ -30,6 +36,10 @@ export class UserdataService {
   }
   getDocumentPathNew(collectionName:string, documentId: string){
     const collectionPath= collectionName + '/' + documentId ;   
-    return this.db.doc<TestArrayNew>(collectionPath).valueChanges();   
+    return this.db.doc<TestArray>(collectionPath).valueChanges();   
+  }
+  getMapStringPathMap(collectionName:string, documentId: string){
+    const collectionPath= collectionName + '/' + documentId ;   
+    return this.db.doc<TestMapString>(collectionPath).valueChanges();   
   }
 }

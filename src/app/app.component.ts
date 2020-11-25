@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserdataService,TestDocument, TestArrayNew} from './service/userdata.service';
+import { UserdataService,TestDocument, TestArray, TestMapString} from './service/userdata.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, Subscription } from 'rxjs';
 import { OnDestroy } from '@angular/core';
@@ -15,11 +15,17 @@ export class AppComponent implements OnDestroy {
   loggedin = false;
   Componentvar :TestDocument | undefined;
   Componentvar1:string[] | undefined;
+  Componentvar2:TestMapString | undefined;
+
   subAuth: Subscription;
   myarraydisplay: [] = [];
   mysubDocRead: Subscription | undefined;
   myitemsdisplay: Observable<TestDocument> | undefined;
-  myitemsdisplayArray: Observable<TestArrayNew> | undefined;
+  myitemsdisplayArray: Observable<TestArray> | undefined;
+  mymapstring: Observable<TestMapString>|undefined;
+  title: any;
+  
+
 
   constructor(public afAuth: AngularFireAuth, public tutorialService: UserdataService) {
 
@@ -51,6 +57,19 @@ export class AppComponent implements OnDestroy {
               console.log(value);
             });
           }
+        });
+
+        this.mymapstring = this.tutorialService.getMapStringPathMap('TestCollectionMap','TestMap').pipe(take(1));
+        this.mysubDocRead= this.mymapstring.subscribe(testdataSubscribedMap=>{
+          
+          this.Componentvar2=testdataSubscribedMap;
+          if(testdataSubscribedMap !==null){
+            for (const fieldkeymap in testdataSubscribedMap){
+              console.log(fieldkeymap,testdataSubscribedMap[fieldkeymap]);//keys & values              
+            }
+            console.log(this.Componentvar2?.Name)
+
+            }
         });
 
       } else {

@@ -24,3 +24,12 @@
   <pre>{{ arrayval }}</pre>
 </div>
 </div>
+
+<div *ngIf="mymapstring | async as userone">
+  <div *ngIf="userone as mytemp1 ">
+      <pre>{{ mytemp1.Name }}</pre>
+      <pre>{{ mytemp1.Place }}</pre>
+      {{mytemp1 | json}}
+    </div>
+  </div> 
+     
