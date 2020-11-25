@@ -11,19 +11,16 @@
   </button>
 </mat-toolbar>
 
-  <div *ngIf="myitemsdisplay | async as userone">
-    <div *ngFor="let item of userone.Items "> <!--Manoj change to item-->
-      <pre>{{ item.TestDescription }}</pre>
-    </div>
-  </div>  
-  <div *ngIf="myitemsdisplaycoll | async; let items">
-    <div *ngFor="let item of items ">
-      <pre>{{ item.Project }}</pre>
-      <button mat-raised-button (click)="tutorialService.deletearraybyindex(item.id)">Delete</button>
-    </div>
-  </div> 
-
-
-<!--<div *ngFor="let item of myarraydisplay">
-  <pre>{{ item | json }}</pre>
-</div>*/-->
+<div *ngIf="myitemsdisplay | async as userone">
+<div *ngIf="userone as mytemp1 ">
+    <pre>{{ mytemp1.TestField }}</pre>
+    <pre>{{ mytemp1.TestFieldNext }}</pre>
+    {{mytemp1 | json}}
+  </div>
+</div> 
+   
+<div *ngIf="myitemsdisplayNew | async as useroneNew">
+<div *ngFor="let arrayval of useroneNew.TestArray ">
+  <pre>{{ arrayval }}</pre>
+</div>
+</div>

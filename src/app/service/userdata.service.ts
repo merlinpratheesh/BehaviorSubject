@@ -3,7 +3,15 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { collectionData, doc } from 'rxfire/firestore';
-import { map  } from 'rxjs/operators';
+
+export interface TestDocument{
+  TestField: string; 
+  TestFieldNext: string; 
+}
+export interface TestArrayNew{
+ ArrayList: string[]; 
+}
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,24 +24,12 @@ export class UserdataService {
   logout() {
     return this.auth.signOut();
   }
-  /*getDocumentData(projectname:string, mainfield: string, subfield: string): any {
-    const collectionPath= projectname + '/' + mainfield + '/TestItems/'+ subfield;  
-    const myDocRef = this.db.firestore.doc(collectionPath);            
-    return doc(myDocRef);
-  }*/
-
-  deletearraybyindex(item: string): any {
-    return  this.db.collection<any>('KeysListCollection').doc(item).delete();
+  getDocumentPath(collectionName:string, documentId: string){
+    const collectionPath= collectionName + '/' + documentId ;   
+    return this.db.doc<TestDocument>(collectionPath).valueChanges();   
   }
-  
-
-
-
-  getDocumentData(projectname:string, mainfield: string, subfield: string): any {
-    const collectionPath= projectname + '/' + mainfield + '/TestItems/'+ subfield;  
-    return doc(this.db.firestore.doc(collectionPath)).pipe(
-      map(changes => ({ ...changes.data() })
-      ));
-      //angularfire/rxfire/firebase native
+  getDocumentPathNew(collectionName:string, documentId: string){
+    const collectionPath= collectionName + '/' + documentId ;   
+    return this.db.doc<TestArrayNew>(collectionPath).valueChanges();   
   }
 }

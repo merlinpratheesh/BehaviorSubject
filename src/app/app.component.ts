@@ -1,20 +1,9 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { UserdataService } from './service/userdata.service';
+import { Component } from '@angular/core';
+import { UserdataService,TestDocument, TestArrayNew} from './service/userdata.service';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { take } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { AngularFirestoreCollection ,AngularFirestore} from '@angular/fire/firestore';
-
-const getObservable = (collection: AngularFirestoreCollection<any>) => {
-  const subject = new BehaviorSubject([]);
-  collection.valueChanges({ idField: 'id' }).subscribe((val: any[]) => {
-    subject.next(val);
-  });
-  return subject;
-};
-
 
 
 @Component({
@@ -24,33 +13,55 @@ const getObservable = (collection: AngularFirestoreCollection<any>) => {
 })
 export class AppComponent implements OnDestroy {
   loggedin = false;
+  Componentvar :TestDocument | undefined;
+  Componentvar1:string[] | undefined;
   subAuth: Subscription;
   myarraydisplay: [] = [];
-  myitemsdisplaycoll: Observable<any>;
-  myitemsdisplay: Observable<any> | undefined
-  userid: string;
-  constructor(public afAuth: AngularFireAuth, public tutorialService: UserdataService , private db: AngularFirestore, public cd: ChangeDetectorRef ) {
+  mysubDocRead: Subscription | undefined;
+  myitemsdisplay: Observable<any> | undefined;
+  myitemsdisplayArray: Observable<TestArrayNew> | undefined;
+
+  constructor(public afAuth: AngularFireAuth, public tutorialService: UserdataService) {
 
     this.subAuth = this.afAuth.authState.subscribe(res => {
       if (res && res.uid) {
         this.loggedin = true;
-        this.myitemsdisplay=this.tutorialService.getDocumentData('TestAngular','TestMain', 'TestSub').pipe(take(1));
-        
+        this.myitemsdisplay = this.tutorialService.getDocumentPath('TestCollection','TestId').pipe(take(1));
+
+        this.mysubDocRead= this.myitemsdisplay.subscribe(testdataSubscribed=>{
+          this.Componentvar=testdataSubscribed;
+
+          if(testdataSubscribed !==null){
+            for(const fieldkey in testdataSubscribed){
+              console.log(fieldkey,testdataSubscribed[fieldkey]);//keys & values              
+            }
+            console.log(this.Componentvar?.TestField)
+          }
+        });
+
+        this.myitemsdisplayArray = this.tutorialService.getDocumentPathNew('TestCollectionArray','TestArray').pipe(take(1));
+        this.mysubDocRead= this.myitemsdisplayArray.subscribe(testdataSubscribedNew=>{
+          
+          this.Componentvar1=testdataSubscribedNew.ArrayList;
+          if(testdataSubscribedNew !==null){
+            for (let i = 0; i < this.Componentvar1.length; i++) {
+              console.log(this.Componentvar1[i]);
+            }
+            this.Componentvar1.forEach((value) => {
+              console.log(value);
+            });
+          }
+        });
+
       } else {
         this.loggedin = false;
       }
     });
-    this.subAuth = this.afAuth.authState.subscribe(res => {
-      if (res && res.uid) {
-        this.userid = res.uid;
-        this.loggedin = true;
-        this.myitemsdisplaycoll =getObservable(this.db.collection('KeysListCollection',ref => ref.orderBy('Project')));
-      }
-  });
-}
 
+  }
 
-ngOnDestroy() {
- this.subAuth.unsubscribe();
+  ngOnDestroy()
+{
+  this.subAuth.unsubscribe();
 }
 }
