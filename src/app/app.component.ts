@@ -5,7 +5,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestoreCollection ,AngularFirestore} from '@angular/fire/firestore';
 
 const getObservable = (collection: AngularFirestoreCollection<any>) => {
   const subject = new BehaviorSubject([]);
@@ -29,10 +29,7 @@ export class AppComponent implements OnDestroy {
   myitemsdisplaycoll: Observable<any>;
   myitemsdisplay: Observable<any> | undefined
   userid: string;
- 
-
-
-  constructor(public afAuth: AngularFireAuth, public tutorialService: UserdataService , public cd: ChangeDetectorRef , private db: AngularFirestore) {
+  constructor(public afAuth: AngularFireAuth, public tutorialService: UserdataService , private db: AngularFirestore, public cd: ChangeDetectorRef ) {
 
     this.subAuth = this.afAuth.authState.subscribe(res => {
       if (res && res.uid) {

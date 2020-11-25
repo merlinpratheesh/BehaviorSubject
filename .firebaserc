@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "verifytesttool": {
+      "hosting": {
+        "BehaviorSubject": [
+          "verifytesttool"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "verifytesttool"
+  }
+}
