@@ -23,7 +23,18 @@
     </div>
   </div> 
 
-
+<h1>Display the Doc-map obj from a Collection</h1>
+{{Testcollection | json}}
+  <div *ngFor="let itemmap of Testcollection">
+    <h2>Individual Doc-map obj - key- Value</h2>
+    <pre> {{ itemmap.documentField}}</pre>
+      <h2>Individual Doc-map obj - key</h2>
+      <div *ngFor="let item of itemmap | keyvalue">
+        {{item.key}}:{{item.value}}
+      </div>
+  </div>
+  
+  
 <!--<div *ngFor="let item of myarraydisplay">
   <pre>{{ item | json }}</pre>
 </div>*/-->

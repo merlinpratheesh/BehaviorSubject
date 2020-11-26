@@ -16,6 +16,11 @@ const getObservable = (collection: AngularFirestoreCollection<any>) => {
 };
 
 
+export interface collectiondoc{
+  documentField: string;
+
+}
+
 
 @Component({
   selector: 'app-root',
@@ -29,6 +34,15 @@ export class AppComponent implements OnDestroy {
   myitemsdisplaycoll: Observable<any>;
   myitemsdisplay: Observable<any> | undefined
   userid: string;
+  Componentvar : collectiondoc| undefined;
+
+  Testcollection: collectiondoc[]=
+  [{
+    documentField:'merlin'
+   }
+    ];
+
+
   constructor(public afAuth: AngularFireAuth, public tutorialService: UserdataService , private db: AngularFirestore, public cd: ChangeDetectorRef ) {
 
     this.subAuth = this.afAuth.authState.subscribe(res => {
@@ -47,6 +61,15 @@ export class AppComponent implements OnDestroy {
         this.myitemsdisplaycoll =getObservable(this.db.collection('KeysListCollection',ref => ref.orderBy('Project')));
       }
   });
+           // this.Componentvar= collectiondoc;
+            for (let i = 0; i < this.Testcollection.length; i++) {
+              console.log("Display the Doc-map obj from a Collection", this.Testcollection[i]);//returns map obj
+              for(const key in this.Testcollection[i]){
+                console.log("Doc-map obj keys", key, "Using keys display value", this.Testcollection[i][key]);
+              }
+            }
+          
+      
 }
 
 
