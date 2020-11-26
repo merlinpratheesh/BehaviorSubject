@@ -21,19 +21,4 @@ export class UserdataService {
     const myDocRef = this.db.firestore.doc(collectionPath);            
     return doc(myDocRef);
   }*/
-
-  deletearraybyindex(item: string): any {
-    return  this.db.collection<any>('KeysListCollection').doc(item).delete();
-  }
-  
-
-
-
-  getDocumentData(projectname:string, mainfield: string, subfield: string): any {
-    const collectionPath= projectname + '/' + mainfield + '/TestItems/'+ subfield;  
-    return doc(this.db.firestore.doc(collectionPath)).pipe(
-      map(changes => ({ ...changes.data() })
-      ));
-      //angularfire/rxfire/firebase native
-  }
 }

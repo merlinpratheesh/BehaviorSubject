@@ -2,7 +2,7 @@
   VerifyToolTest
   
   <span fxFlex="grow"></span>
-  <div *ngIf="afAuth.authState | async as user"> Welcome {{user.displayName}}!</div>
+
   <button mat-icon-button>    
     <fa-icon *ngIf="loggedin === false || loggedin === undefined " (click)="tutorialService.login()"
         class="fas faSignInAlt fa-lg" [icon]="['fas', 'sign-in-alt']"></fa-icon> <!--signup-->
@@ -11,30 +11,28 @@
   </button>
 </mat-toolbar>
 
-  <div *ngIf="myitemsdisplay | async as userone">
-    <div *ngFor="let item of userone.Items "> <!--Manoj change to item-->
-      <pre>{{ item.TestDescription }}</pre>
-    </div>
-  </div>  
-  <div *ngIf="myitemsdisplaycoll | async; let items">
-    <div *ngFor="let item of items ">
-      <pre>{{ item.Project }}</pre>
-      <button mat-raised-button (click)="tutorialService.deletearraybyindex(item.id)">Delete</button>
-    </div>
-  </div> 
 
-<h1>Display the Doc-map obj from a Collection</h1>
-{{Testcollection | json}}
-  <div *ngFor="let itemmap of Testcollection">
-    <h2>Individual Doc-map obj - key- Value</h2>
-    <pre> {{ itemmap.documentField}}</pre>
-      <h2>Individual Doc-map obj - key</h2>
-      <div *ngFor="let item of itemmap | keyvalue">
-        {{item.key}}:{{item.value}}
-      </div>
-  </div>
-  
-  
+ <form class="example-form">
+    <mat-form-field class="example-full-width">
+
+      <input type="text"
+             placeholder="Pick one"
+             aria-label="Number"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto">
+
+      <mat-autocomplete #auto="matAutocomplete">
+
+    <mat-option *ngFor="let fruit of filteredOptions | async" [value]="fruit">
+      {{fruit}}
+    </mat-option>
+
+      </mat-autocomplete>
+
+    </mat-form-field>
+  </form>
+
 <!--<div *ngFor="let item of myarraydisplay">
   <pre>{{ item | json }}</pre>
 </div>*/-->

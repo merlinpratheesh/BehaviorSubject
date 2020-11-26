@@ -6,6 +6,9 @@ import { OnDestroy } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { AngularFirestoreCollection ,AngularFirestore} from '@angular/fire/firestore';
+import { FormControl } from '@angular/forms';
+import {map, startWith} from 'rxjs/operators';
+
 
 const getObservable = (collection: AngularFirestoreCollection<any>) => {
   const subject = new BehaviorSubject([]);
@@ -15,10 +18,8 @@ const getObservable = (collection: AngularFirestoreCollection<any>) => {
   return subject;
 };
 
-
 export interface collectiondoc{
-  documentField: string;
-
+  fruits: string[]
 }
 
 
@@ -35,43 +36,34 @@ export class AppComponent implements OnDestroy {
   myitemsdisplay: Observable<any> | undefined
   userid: string;
   Componentvar : collectiondoc| undefined;
+  myControl = new FormControl();
+  filteredOptions: Observable<string[]> | undefined;
+
 
   Testcollection: collectiondoc[]=
   [{
-    documentField:'merlin'
+    fruits : ['Apple', 'Orange', 'Banana']
+
    }
     ];
+  fruits: any;
 
 
-  constructor(public afAuth: AngularFireAuth, public tutorialService: UserdataService , private db: AngularFirestore, public cd: ChangeDetectorRef ) {
-
-    this.subAuth = this.afAuth.authState.subscribe(res => {
-      if (res && res.uid) {
-        this.loggedin = true;
-        this.myitemsdisplay=this.tutorialService.getDocumentData('TestAngular','TestMain', 'TestSub').pipe(take(1));
-        
-      } else {
-        this.loggedin = false;
-      }
-    });
-    this.subAuth = this.afAuth.authState.subscribe(res => {
-      if (res && res.uid) {
-        this.userid = res.uid;
-        this.loggedin = true;
-        this.myitemsdisplaycoll =getObservable(this.db.collection('KeysListCollection',ref => ref.orderBy('Project')));
-      }
-  });
-           // this.Componentvar= collectiondoc;
-            for (let i = 0; i < this.Testcollection.length; i++) {
-              console.log("Display the Doc-map obj from a Collection", this.Testcollection[i]);//returns map obj
-              for(const key in this.Testcollection[i]){
-                console.log("Doc-map obj keys", key, "Using keys display value", this.Testcollection[i][key]);
-              }
-            }
-          
-      
-}
-
+    ngOnInit( ) {  
+      this.filteredOptions = this.myControl.valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this._filter(value))
+        );  
+    }
+  
+    private _filter(value: string): string[] 
+    {
+      const filterValue = value.toUpperCase();
+      console.log('myarray', this.Testcollection[0].fruits)
+      return this.Testcollection[0].fruits.filter(fruit => fruit.toUpperCase().includes(filterValue));
+    }
+  
 
 ngOnDestroy() {
  this.subAuth.unsubscribe();
