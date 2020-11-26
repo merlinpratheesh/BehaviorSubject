@@ -42,8 +42,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
-import { faPinterest } from '@fortawesome/free-brands-svg-icons/faPinterest';
-import { faWhatsapp } from '@fortawesome/free-brands-svg-icons/faWhatsapp';
+
 @NgModule({
   exports: [
     A11yModule,

@@ -12,15 +12,19 @@
 </mat-toolbar>
 
 <div *ngIf="myitemsdisplay | async as userone">
-<div *ngIf="userone as mytemp1 ">
-    <pre>{{ mytemp1.TestField }}</pre>
-    <pre>{{ mytemp1.TestFieldNext }}</pre>
-    {{mytemp1 | json}}
+  <div *ngIf="userone as mytemp1 ">
+      <pre>{{ mytemp1.TestField }}</pre>
+      <pre>{{ mytemp1.TestFieldNext }}</pre>
+      {{mytemp1 | json}}
   </div>
 </div> 
-   
-<div *ngIf="myitemsdisplayArray | async as useroneNew">
-<div *ngFor="let arrayval of useroneNew.ArrayList ">
-  <pre>{{ arrayval }}</pre>
-</div>
-</div>
+
+
+<div *ngIf="myitemsdisplayArrayMap | async as userone">
+
+  <div *ngIf="userone.ArrayMapList  as userone1">
+    <pre>{{ userone1.FirstName }}</pre>
+    <pre>{{ userone1.LastName }}</pre>
+    </div>
+
+</div>         
