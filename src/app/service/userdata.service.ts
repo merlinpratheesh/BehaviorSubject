@@ -17,6 +17,16 @@ export interface TestMapString{
   Place:string;
  }
 
+ export interface TestMapArray{
+  FirstName(FirstName: any);
+
+  TestMap : SomeDocument[];
+}
+ export interface SomeDocument{
+  FirstName:string;
+  LastName:string;
+   }
+ 
 
 @Injectable({
   providedIn: 'root'
@@ -42,4 +52,9 @@ export class UserdataService {
     const collectionPath= collectionName + '/' + documentId ;   
     return this.db.doc<TestMapString>(collectionPath).valueChanges();   
   }
+  getArrayMap(collectionName:string, documentId: string){
+    const collectionPath= collectionName + '/' + documentId ;   
+    return this.db.doc<TestMapArray>(collectionPath).valueChanges();   
+  }
+  
 }

@@ -33,3 +33,10 @@
     </div>
   </div> 
      
+  <div *ngIf="mymaparray | async as user">
+    <div *ngFor="let arraymap of user.ArrayMap ">
+      <pre>{{ arraymap.FirstName }}</pre>
+      fff
+      {{arraymap | json}}
+    </div>
+    </div>
