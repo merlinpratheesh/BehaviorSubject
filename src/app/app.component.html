@@ -26,9 +26,9 @@
 </div>
 
 <div *ngIf="mymapstring | async as userone">
-  <div *ngIf="userone as mytemp1 ">
-      <pre>{{ mytemp1.Name }}</pre>
-      <pre>{{ mytemp1.Place }}</pre>
+  <div *ngIf="userone as ArrayMap ">
+      <pre>{{ userone.Name }}</pre>
+      <pre>{{ userone.Place }}</pre>
       {{mytemp1 | json}}
     </div>
   </div> 
