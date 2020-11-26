@@ -67,7 +67,7 @@ export class AppComponent implements OnDestroy {
             for (const fieldkeymap in testdataSubscribedMap){
               console.log(fieldkeymap,testdataSubscribedMap[fieldkeymap]);//keys & values              
             }
-            console.log(this.Componentvar2?.Place)
+            console.log(this.Componentvar2?.Name)
 
             }
         });

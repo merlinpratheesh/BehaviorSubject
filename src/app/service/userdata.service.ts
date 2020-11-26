@@ -9,12 +9,16 @@ export interface TestDocument{
   TestFieldNext: string; 
 }
 export interface TestArray{
- 
  ArrayList: string[]; 
 }
-export interface TestMapString{
+export interface SomeMap{
   Name: string;
   Place:string;
+
+ }
+ export interface TestMapString{
+  Name(Name: any);
+  TestMapString:SomeMap[]
  }
 
 
