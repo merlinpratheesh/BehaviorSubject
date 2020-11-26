@@ -15,15 +15,10 @@ const getObservable = (collection: AngularFirestoreCollection<any>) => {
   });
   return subject;
 };
-export interface SomeDocument{
-  FirstName : String;
-  LastName : String;
-  Place : String;
-}
 
 
 export interface collectiondoc{
-  Details: SomeDocument[];
+  fruits: string[]
 }
 
 
@@ -42,28 +37,11 @@ export class AppComponent implements OnDestroy {
   Componentvar : collectiondoc| undefined;
 
   Testcollection: collectiondoc[]=
-  [
-    {
-     Details : [{
-                  FirstName : 'Merlin',
-                  LastName : 'Pratheesh',
-                  Place : 'Nagercoil'
-     },
-     {
-      FirstName : 'Merlin',
-      LastName : 'Pratheesh',
-      Place : 'Nagercoil'
-      }
-    ]
-  },
-  {
-    Details : [{
-                 FirstName : 'Manoj',
-                 LastName : 'Isaac',
-                 Place : 'Chennai'
-    }]
- }
-];
+  [{
+    fruits : ['Apple', 'Orange', 'Banana']
+
+   }
+    ];
 
 
   constructor(public afAuth: AngularFireAuth, public tutorialService: UserdataService , private db: AngularFirestore, public cd: ChangeDetectorRef ) {
@@ -81,37 +59,20 @@ export class AppComponent implements OnDestroy {
       if (res && res.uid) {
         this.userid = res.uid;
         this.loggedin = true;
-        //this.myitemsdisplaycoll =getObservable(this.db.collection('KeysListCollection',ref => ref.orderBy('Project')));
+        this.myitemsdisplaycoll =getObservable(this.db.collection('KeysListCollection',ref => ref.orderBy('Project')));
       }
   });
-  /*
            // this.Componentvar= collectiondoc;
             for (let i = 0; i < this.Testcollection.length; i++) {
-              console.log("Display the Doc-mapArray obj from a Collection", this.Testcollection[i]);//returns map obj
-              for (let j=0; j < this.Testcollection[i].Details.length; j ++){
-                console.log("Display the mapArray obj from a document", this.Testcollection[i].Details[j]);//returns  obj value
-                for( const key in this.Testcollection[i].Details[j] ){
-                  console.log('Key value in Doc', key);//key value
-                }
+              console.log("Display the Doc-map obj from a Collection", this.Testcollection[i]);//returns map obj
+              for (let j=0; j < this.Testcollection[i].fruits.length; j ++){
+                console.log("Display the map obj from a document", this.Testcollection[i].fruits[j]);//returns  obj value
               }
               for( const key in this.Testcollection[i] ){
                 console.log('Key value in Doc', key);//key value
               }
-             
-              
-            }*/
-            this.Testcollection.forEach(doc=>{
-              console.log('doc', doc);
-              for(const mapdockey in doc){
-                console.log('doc-key', mapdockey, 'dockey- value', doc[mapdockey]);
-              }
-              doc.Details.forEach(mapdoc=>{
-                console.log('mapdoc', mapdoc);
-                for(const mapdockey in mapdoc){
-                  console.log('mapdoc-key', mapdockey, 'mapdockey- value', mapdoc[mapdockey]);
-                }
-              });              
-            });
+
+            }
           
       
 }
