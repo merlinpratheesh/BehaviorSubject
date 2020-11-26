@@ -6,6 +6,7 @@ import { OnDestroy } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { AngularFirestoreCollection ,AngularFirestore} from '@angular/fire/firestore';
+import { Placeholder } from '@angular/compiler/src/i18n/i18n_ast';
 
 const getObservable = (collection: AngularFirestoreCollection<any>) => {
   const subject = new BehaviorSubject([]);
@@ -17,8 +18,7 @@ const getObservable = (collection: AngularFirestoreCollection<any>) => {
 
 
 export interface collectiondoc{
-  documentField: string;
-
+  fruits: string[]
 }
 
 
@@ -38,7 +38,8 @@ export class AppComponent implements OnDestroy {
 
   Testcollection: collectiondoc[]=
   [{
-    documentField:'merlin'
+    fruits : ['Apple', 'Orange', 'Banana']
+
    }
     ];
 
@@ -64,9 +65,13 @@ export class AppComponent implements OnDestroy {
            // this.Componentvar= collectiondoc;
             for (let i = 0; i < this.Testcollection.length; i++) {
               console.log("Display the Doc-map obj from a Collection", this.Testcollection[i]);//returns map obj
-              for(const key in this.Testcollection[i]){
-                console.log("Doc-map obj keys", key, "Using keys display value", this.Testcollection[i][key]);
+              for (let j=0; j < this.Testcollection[i].fruits.length; j ++){
+                console.log("Display the map obj from a document", this.Testcollection[i].fruits[j]);//returns  obj value
               }
+              for( const key in this.Testcollection[i] ){
+                console.log('Key value in Doc', key);//key value
+              }
+
             }
           
       
